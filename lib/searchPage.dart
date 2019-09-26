@@ -34,13 +34,16 @@ class searchPage extends SearchDelegate<Car> {
   final List<Car> recentCar = new List<Car>();
 
   @override
-  ThemeData appBarTheme(BuildContext context){
+  ThemeData appBarTheme(BuildContext context) {
     assert(context != null);
     final ThemeData theme = Theme.of(context);
     assert(theme != null);
     return theme;
-
   }
+
+  @override
+  String get searchFieldLabel => "Cerca";
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:pastore_app/style.dart';
 import 'car.dart';
@@ -22,17 +21,12 @@ class CarPageState extends State<CarPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = ScrollController();
   }
 
   @override
   Widget build(BuildContext context) {
-    int _currentIndex;
-
-    List<dynamic> listDetails = car.details;
-
     final baseTextStyle = const TextStyle(fontFamily: 'Poppins', height: 1.2);
 
     final headerTextStyle = baseTextStyle.copyWith(
@@ -40,14 +34,12 @@ class CarPageState extends State<CarPage> {
         fontSize: 16.0,
         fontWeight: FontWeight.w600);
 
-    final regularTextStyle = baseTextStyle.copyWith(
+    final subHeaderTextStyle = baseTextStyle.copyWith(
         color: AppTheme.nearlyBlack,
-        fontSize: 9.0,
+        fontSize: 14.0,
         fontWeight: FontWeight.w400);
 
-    final subHeaderTextStyle = regularTextStyle.copyWith(
-      fontSize: 14.0,
-    );
+    List<dynamic> listDetails = car.details;
 
     final carCardContent = new Container(
       margin: new EdgeInsets.symmetric(horizontal: 16.0),

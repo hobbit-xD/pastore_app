@@ -15,13 +15,6 @@ class FavoritesScreen extends StatelessWidget {
     final headerTextStyle = baseTextStyle.copyWith(
         color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w600);
 
-    final regularTextStyle = baseTextStyle.copyWith(
-        color: Colors.black54, fontSize: 9.0, fontWeight: FontWeight.w400);
-
-    final subHeaderTextStyle = regularTextStyle.copyWith(
-      fontSize: 14.0,
-    );
-
     return Scaffold(
       body: new Center(
         child: favoriteCars.isEmpty
@@ -47,8 +40,7 @@ class FavoritesScreen extends StatelessWidget {
                   trailing: new IconButton(
                       icon: Icon(Icons.close),
                       onPressed: () {
-                         favoriteCars[index].setFavorite(false);
-
+                        favoriteCars[index].setFavorite(false);
                       }),
                 ),
               ),

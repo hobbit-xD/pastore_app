@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-//import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:pastore_app/CarPage.dart';
 import 'package:pastore_app/ui.dart';
 import 'car.dart';
@@ -47,20 +46,18 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  bool _anchorToBottom = false;
   FirebaseUtils databaseUtils;
   PageController _pageController;
   var _page = 0;
   //CameraController _controller;
   List<Car> carList = new List<Car>();
 
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   Query _carQuery;
 
   StreamSubscription<Event> _onAddedSubscription;
   StreamSubscription<Event> _onChangedSubscription;
 
- // UniqueKey _keyPageView = new UniqueKey();
+  // UniqueKey _keyPageView = new UniqueKey();
   @override
   void initState() {
     databaseUtils = new FirebaseUtils();
@@ -69,7 +66,7 @@ class HomeState extends State<Home> {
 
     _carQuery = databaseUtils.getRef();
     _onAddedSubscription = _carQuery.onChildAdded.listen(_onEntryAdded);
-   // _onChangedSubscription = _carQuery.onChildChanged.listen(_onEntryChanged);
+    _onChangedSubscription = _carQuery.onChildChanged.listen(_onEntryChanged);
 
 /*
     _controller = CameraController(cameras[0], ResolutionPreset.medium);
@@ -146,8 +143,10 @@ class HomeState extends State<Home> {
     });
   }
 
- /* _onEntryChanged(Event event) {
+  _onEntryChanged(Event event) {
     var oldEntry = carList.singleWhere((entry) {
+      print(entry.key);
+      print(event.snapshot.key);
       return entry.key == event.snapshot.key;
     });
 
@@ -156,7 +155,6 @@ class HomeState extends State<Home> {
     });
   }
 
-  */
   _onEntryAdded(Event event) {
     setState(() {
       carList.add(Car.fromSnapshot(event.snapshot));
@@ -169,12 +167,12 @@ class HomeState extends State<Home> {
           shrinkWrap: true,
           itemCount: carList.length,
           itemBuilder: (BuildContext context, int index) {
-            return new Column(
-              children: <Widget>[
-                new HomeUI(carList[index]),
-              ],
-            );
+            return new HomeUI(carList[index]);
           });
+    } else {
+      return new Center(
+        child: new Text("Nessun veicolo presente"),
+      );
     }
   }
 
@@ -202,10 +200,13 @@ class HomeState extends State<Home> {
       ],
     );
 */
+    List<Widget> _myPages = [
+      _showList(),
+      Container(),
+      FavoritesScreen(carList)
+    ];
 
     return Scaffold(
-      //backgroundColor: new Color(0xFF4a6575),
-
       appBar: new AppBar(
         elevation: 0.0,
       ),
@@ -228,7 +229,6 @@ class HomeState extends State<Home> {
                 onPressed: () async {
                   final Car searchRes = await showSearch<Car>(
                       context: context, delegate: searchPage(carList));
-
                   if (searchRes != null)
                     Navigator.of(context).push(new PageRouteBuilder(
                         pageBuilder: (_, __, ___) => new CarPage(searchRes)));
@@ -238,15 +238,25 @@ class HomeState extends State<Home> {
               title: new Text(''), icon: new Icon(Icons.bookmark_border)),
         ],
       ),
-      body: new PageView(
+      body: new PageView.builder(
+          controller: _pageController,
+          onPageChanged: onPageChanged,
+          scrollDirection: Axis.horizontal,
+          physics: BouncingScrollPhysics(),
+          itemCount: _myPages.length,
+          itemBuilder: (BuildContext context, int position) =>
+              _myPages[position]),
+
+      /*new PageView(
         //key: _keyPageView,
         scrollDirection: Axis.horizontal,
         pageSnapping: false,
         controller: _pageController,
         physics: BouncingScrollPhysics(),
-        onPageChanged: onPageChanged,
-        children: <Widget>[
-          /*   new FirebaseAnimatedList(
+        onPageChanged: onPageChanged,*/
+      //   new ListView(
+      //  children: <Widget>[
+      /*   new FirebaseAnimatedList(
             key: new ValueKey<bool>(_anchorToBottom),
             query: databaseUtils.getRef(),
             reverse: _anchorToBottom,
@@ -261,12 +271,12 @@ class HomeState extends State<Home> {
               );
             },
           ),*/
-          _showList(),
-          //camera,
-          new Container(),
-          new FavoritesScreen(carList),
-        ],
-      ),
+      // _showList(),
+      //camera,
+      //  new Container(),
+      //  new FavoritesScreen(carList),
+      //      ],
+      //    ),
     );
   }
 /*

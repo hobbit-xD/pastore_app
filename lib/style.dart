@@ -25,4 +25,8 @@ class AppTheme {
   static const Color blue = Color(0xff005b96);
   static const Color lightBlue = Color(0xff6497b1);
   static const Color lighterBlue = Color(0xffb3cde0);
+
+
+
+
 }

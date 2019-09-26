@@ -13,13 +13,10 @@ class HomeUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new InkWell(
-        onTap: () => Navigator.of(context).push(new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new CarPage(car))),
-        child: new Column(
-          children: <Widget>[
-            new HomePageBody(car),
-          ],
-        ));
+      onTap: () => Navigator.of(context).push(
+          new PageRouteBuilder(pageBuilder: (_, __, ___) => new CarPage(car))),
+      child: new HomePageBody(car),
+    );
   }
 }
 
@@ -100,7 +97,7 @@ class CarState extends State<CarRow> {
                   new Text(
                     "Anno: ",
                     style: subHeaderTextStyle.copyWith(
-                        color:  AppTheme.darkText, fontWeight: FontWeight.w600),
+                        color: AppTheme.darkText, fontWeight: FontWeight.w600),
                   ),
                   new Text(
                     car.anno,
@@ -115,7 +112,6 @@ class CarState extends State<CarRow> {
                       ? new Text("Emissioni: " + car.emissioni,
                           style: subHeaderTextStyle)
                       : new SizedBox(),
-
                 ],
               )),
             ],
@@ -165,11 +161,14 @@ class CarState extends State<CarRow> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                new Text("Aggiungimi ai preferiti",style: subHeaderTextStyle),
+                new Text("Aggiungimi ai preferiti", style: subHeaderTextStyle),
                 new IconButton(
                   icon: (car.isFavorite
-                      ? Icon(Icons.bookmark,color: AppTheme.orangeText,)
-                      : Icon(Icons.bookmark_border,color: AppTheme.darkText)),
+                      ? Icon(
+                          Icons.bookmark,
+                          color: AppTheme.orangeText,
+                        )
+                      : Icon(Icons.bookmark_border, color: AppTheme.darkText)),
                   onPressed: _toggleFavorite,
                 ),
               ],
@@ -215,17 +214,16 @@ class CarState extends State<CarRow> {
       width: 150.0,
       height: 100.0,
       decoration: BoxDecoration(
-        border: Border.all(color: AppTheme.lightBlue,width: 1.0),
-        borderRadius: BorderRadius.circular(5.0),
-        image: new DecorationImage(
-            image: NetworkImage(car.image), fit: BoxFit.fill),
+          border: Border.all(color: AppTheme.lightBlue, width: 1.0),
+          borderRadius: BorderRadius.circular(5.0),
+          image: new DecorationImage(
+              image: NetworkImage(car.image), fit: BoxFit.fill),
           boxShadow: <BoxShadow>[
             new BoxShadow(
                 color: AppTheme.deactivedText,
                 blurRadius: 8.0,
                 offset: new Offset(1.0, 6.0))
-          ]
-      ),
+          ]),
       //    ),
     );
 

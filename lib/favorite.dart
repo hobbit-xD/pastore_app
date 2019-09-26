@@ -2,9 +2,19 @@ import 'package:flutter/material.dart';
 import 'CarPage.dart';
 import 'car.dart';
 
-class FavoritesScreen extends StatelessWidget {
+class FavoritesScreen extends StatefulWidget {
   final List<Car> _cars;
   FavoritesScreen(this._cars);
+
+  @override
+  State<StatefulWidget> createState() {
+    return FavoritesScreenState(_cars);
+  }
+}
+
+class FavoritesScreenState extends State<FavoritesScreen> {
+  final List<Car> _cars;
+  FavoritesScreenState(this._cars);
 
   List<Car> get favoriteCars => _cars.where((c) => c.isFavorite).toList();
 
@@ -25,7 +35,10 @@ class FavoritesScreen extends StatelessWidget {
                   style: headerTextStyle,
                 ),
               )
-            : ListView.builder(
+            : ListView.separated(
+                separatorBuilder: (context, index) {
+                  return Divider();
+                },
                 itemCount: favoriteCars.length,
                 itemBuilder: (BuildContext context, int index) => ListTile(
                   onTap: () => Navigator.of(context).push(new PageRouteBuilder(
@@ -40,7 +53,11 @@ class FavoritesScreen extends StatelessWidget {
                   trailing: new IconButton(
                       icon: Icon(Icons.close),
                       onPressed: () {
-                        favoriteCars[index].setFavorite(false);
+                        setState(() {
+                          if (favoriteCars[index].isFavorite) {
+                            favoriteCars[index].setFavorite(false);
+                          }
+                        });
                       }),
                 ),
               ),

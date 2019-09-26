@@ -60,7 +60,7 @@ class HomeState extends State<Home> {
   StreamSubscription<Event> _onAddedSubscription;
   StreamSubscription<Event> _onChangedSubscription;
 
-  UniqueKey _keyPageView = new UniqueKey();
+ // UniqueKey _keyPageView = new UniqueKey();
   @override
   void initState() {
     databaseUtils = new FirebaseUtils();
@@ -239,7 +239,7 @@ class HomeState extends State<Home> {
         ],
       ),
       body: new PageView(
-        key: _keyPageView,
+        //key: _keyPageView,
         scrollDirection: Axis.horizontal,
         pageSnapping: false,
         controller: _pageController,

@@ -1,6 +1,7 @@
 # pastore_app
 
-A new Flutter application.
+My first flutter application for Pastore.
+Workin on..
 
 ## Getting Started
 

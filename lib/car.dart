@@ -30,6 +30,7 @@ class Car {
   String _image;
   List _postImages;
   List<dynamic> details;
+
   bool _isFavorite = false;
 
   Car(

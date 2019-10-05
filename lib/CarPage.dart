@@ -58,10 +58,17 @@ class CarPageState extends State<CarPage> {
           new Container(
             height: 4.0,
           ),
-          new Text(
-            "Rif: " + car.rif,
-            style: subHeaderTextStyle,
-          ),
+          new Row(children: <Widget>[
+            new Text(
+              "Rif: ",
+              style: subHeaderTextStyle.copyWith(
+                  color: AppTheme.darkText, fontWeight: FontWeight.w600),
+            ),
+            new Text(
+              car.rif,
+              style: subHeaderTextStyle,
+            ),
+          ]),
           new Container(
             height: 4.0,
           ),
@@ -71,7 +78,12 @@ class CarPageState extends State<CarPage> {
                   child: new Row(
                 children: <Widget>[
                   new Text(
-                    "Anno: " + car.anno,
+                    "Anno: ",
+                    style: subHeaderTextStyle.copyWith(
+                        color: AppTheme.darkText, fontWeight: FontWeight.w600),
+                  ),
+                  new Text(
+                    car.anno,
                     style: subHeaderTextStyle,
                   ),
                 ],
@@ -96,7 +108,12 @@ class CarPageState extends State<CarPage> {
                   child: new Row(
                 children: <Widget>[
                   new Text(
-                    "Percorrenza: " + car.km,
+                    "Percorrenza: ",
+                    style: subHeaderTextStyle.copyWith(
+                        color: AppTheme.darkText, fontWeight: FontWeight.w600),
+                  ),
+                  new Text(
+                    car.km,
                     style: subHeaderTextStyle,
                   ),
                 ],
@@ -107,12 +124,16 @@ class CarPageState extends State<CarPage> {
                   new Text(
                     "Prezzo: ",
                     style: subHeaderTextStyle.copyWith(
-                        color: Colors.black,
+                        color: AppTheme.darkText,
                         fontSize: 14.5,
                         fontWeight: FontWeight.w600),
                   ),
                   new Text(
                     car.price,
+                    style: subHeaderTextStyle,
+                  ),
+                  new Text(
+                    " IVA esclusa",
                     style: subHeaderTextStyle,
                   )
                 ],
@@ -140,34 +161,6 @@ class CarPageState extends State<CarPage> {
           ]),
     );
 
-    /* final slider = new CarouselSlider(
-      aspectRatio: 16 / 9,
-      viewportFraction: 0.8,
-      initialPage: 0,
-      enableInfiniteScroll: true,
-      reverse: false,
-      onPageChanged: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-      enlargeCenterPage: true,
-      scrollDirection: Axis.horizontal,
-      items: car.postImages.map((imgUrl) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Image.network(
-                imgUrl,
-                fit: BoxFit.fill,
-              ),
-            );
-          },
-        );
-      }).toList(),
-    );
-*/
     final slider = new ConstrainedBox(
       constraints: new BoxConstraints.expand(
           width: MediaQuery.of(context).size.width, height: 400.0),
@@ -231,39 +224,37 @@ class CarPageState extends State<CarPage> {
     );
 
     return Scaffold(
-        appBar: new AppBar(
-          elevation: 0.0,
-          iconTheme: new IconThemeData(color: AppTheme.orangeText),
-          actions: <Widget>[
-            new IconButton(
-              icon: (car.isFavorite
-                  ? Icon(
-                      Icons.bookmark,
-                      color: AppTheme.orangeText,
-                    )
-                  : Icon(Icons.bookmark_border, color: AppTheme.darkText)),
-              onPressed: _toggleFavorite,
-            )
-          ],
-        ),
-        body: new SingleChildScrollView(
-            controller: _controller,
-            child: SafeArea(
-              child: new Column(
-                children: <Widget>[
-                  slider,
-                  new Stack(
-                    children: <Widget>[
-                      carDescr,
-                      carCard,
-                    ],
-                  )
-                ],
-              ),
-            )));
+      appBar: new AppBar(
+        elevation: 0.0,
+        iconTheme: new IconThemeData(color: AppTheme.orangeText),
+      ),
+      body: new SingleChildScrollView(
+          controller: _controller,
+          child: SafeArea(
+            child: new Column(
+              children: <Widget>[
+                slider,
+                new Stack(
+                  children: <Widget>[
+                    carDescr,
+                    carCard,
+                  ],
+                )
+              ],
+            ),
+          )),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: _toggleFavorite,
+        backgroundColor: AppTheme.orange,
+        mini: false,
+        child: car.isFavorite
+            ? Icon(Icons.bookmark, color: AppTheme.blue)
+            : Icon(Icons.bookmark_border, color: AppTheme.nearlyWhite),
+      ),
+    );
   }
 
-  void _toggleFavorite() {
+  void _toggleFavorite() async {
     setState(() {
       if (car.isFavorite) {
         car.setFavorite(false);

@@ -59,7 +59,7 @@ class CarState extends State<CarRow> {
     );
 
     final carCardContent = new Container(
-      margin: new EdgeInsets.fromLTRB(115.0, 20.0, 16.0, 16.0),
+      margin: new EdgeInsets.fromLTRB(113.0, 20.0, 13.0, 16.0),
       constraints: new BoxConstraints.expand(),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,6 +148,10 @@ class CarState extends State<CarRow> {
                   new Text(
                     car.price,
                     style: subHeaderTextStyle,
+                  ),
+                  new Text(
+                    " IVA esclusa",
+                    style: subHeaderTextStyle,
                   )
                 ],
               )),
@@ -178,37 +182,7 @@ class CarState extends State<CarRow> {
       ),
     );
 
-/*
     final carThumb = new Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      alignment: FractionalOffset.centerLeft,
-      child: new ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child: new Image.network(
-            car.image,
-            width: 150.0,
-            fit: BoxFit.contain,
-          )),
-    );
-*/
-
-    final carThumb = new Container(
-/*      width: 150.0,
-      height: 100.0,
-      margin: EdgeInsets.symmetric(vertical: 25.0),
-      alignment: FractionalOffset.centerLeft,
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(8.0),
-        boxShadow: <BoxShadow>[
-          new BoxShadow(
-            color: Colors.black26,
-            blurRadius: 5.0,
-            offset: new Offset(0.0, 8.0),
-          ),
-        ],
-      ),
-      child: new Container(*/
       margin: EdgeInsets.symmetric(vertical: 30.0),
       alignment: FractionalOffset.centerLeft,
       width: 150.0,
@@ -224,7 +198,6 @@ class CarState extends State<CarRow> {
                 blurRadius: 8.0,
                 offset: new Offset(1.0, 6.0))
           ]),
-      //    ),
     );
 
     final carCard = new Container(

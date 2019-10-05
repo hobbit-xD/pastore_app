@@ -1,4 +1,3 @@
-//import 'dart:io';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,18 +7,9 @@ import 'package:pastore_app/ui.dart';
 import 'car.dart';
 import 'favorite.dart';
 import 'firebase_utils.dart';
-//import 'package:camera/camera.dart';
-//import 'package:path_provider/path_provider.dart';
 import 'searchPage.dart';
 import 'style.dart';
 
-//List<CameraDescription> cameras;
-/*
-Future<void> main() async {
-  cameras = await availableCameras();
-  runApp(MyApp());
-}
-*/
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -31,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           scaffoldBackgroundColor: AppTheme.notWhite,
           canvasColor: AppTheme.notWhite,
-          accentColor: AppTheme.blue,
+          accentColor: AppTheme.orange,
           appBarTheme: new AppBarTheme(color: AppTheme.notWhite),
           primaryColor: AppTheme.blue),
       home: Home(),
@@ -48,7 +38,6 @@ class HomeState extends State<Home> {
   FirebaseUtils databaseUtils;
   PageController _pageController;
   var _page = 0;
-  //CameraController _controller;
   List<Car> carList = new List<Car>();
 
   Query _carQuery;
@@ -56,7 +45,6 @@ class HomeState extends State<Home> {
   StreamSubscription<Event> _onAddedSubscription;
   StreamSubscription<Event> _onChangedSubscription;
 
-  // UniqueKey _keyPageView = new UniqueKey();
   @override
   void initState() {
     databaseUtils = new FirebaseUtils();
@@ -67,15 +55,6 @@ class HomeState extends State<Home> {
     _onAddedSubscription = _carQuery.onChildAdded.listen(_onEntryAdded);
     _onChangedSubscription = _carQuery.onChildChanged.listen(_onEntryChanged);
 
-/*
-    _controller = CameraController(cameras[0], ResolutionPreset.medium);
-    _controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
-*/
     super.initState();
   }
 
@@ -83,51 +62,12 @@ class HomeState extends State<Home> {
   void dispose() {
     databaseUtils.dispose();
     _pageController.dispose();
-//    _controller.dispose();
 
     _onAddedSubscription.cancel();
     _onChangedSubscription.cancel();
     super.dispose();
   }
 
-/*
-  void _takePicturePressed() {
-    _takePicture().then((String filePath) {
-      if (mounted) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ImageDetail(filePath)));
-      }
-    });
-  }
-
-  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-
-  Future<String> _takePicture() async {
-    if (!_controller.value.isInitialized) {
-      print("Controller is not initialized");
-      return null;
-    }
-
-    final Directory exDir = await getApplicationDocumentsDirectory();
-    final String photoDir = '${exDir.path}/Photos/image_test';
-    await Directory(photoDir).create(recursive: true);
-    final String filePath = '$photoDir/${timestamp()}.jpg';
-
-    if (_controller.value.isTakingPicture) {
-      print("Already taking picture");
-      return null;
-    }
-
-    try {
-      await _controller.takePicture(filePath);
-    } on CameraException catch (e) {
-      print("Camera exception occured: $e");
-      return null;
-    }
-
-    return filePath;
-  }
-*/
   void navigationTapped(int page) {
     _pageController.animateToPage(
       page,
@@ -177,28 +117,6 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-/*
-    Widget camera = new Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        new AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: CameraPreview(_controller),
-        ),
-        new Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Center(
-            child: RaisedButton.icon(
-              icon: Icon(Icons.camera),
-              label: new Text("Take Picture"),
-              onPressed: _takePicturePressed,
-            ),
-          ),
-        )
-      ],
-    );
-*/
     List<Widget> _myPages = [
       _showList(),
       Container(),
@@ -245,44 +163,6 @@ class HomeState extends State<Home> {
           itemCount: _myPages.length,
           itemBuilder: (BuildContext context, int position) =>
               _myPages[position]),
-
-      /*new PageView(
-        //key: _keyPageView,
-        scrollDirection: Axis.horizontal,
-        pageSnapping: false,
-        controller: _pageController,
-        physics: BouncingScrollPhysics(),
-        onPageChanged: onPageChanged,*/
-      //   new ListView(
-      //  children: <Widget>[
-      /*   new FirebaseAnimatedList(
-            key: new ValueKey<bool>(_anchorToBottom),
-            query: databaseUtils.getRef(),
-            reverse: _anchorToBottom,
-            sort: _anchorToBottom
-                ? (DataSnapshot a, DataSnapshot b) => b.key.compareTo(a.key)
-                : null,
-            itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                Animation<double> animation, int index) {
-              return new SizeTransition(
-                sizeFactor: animation,
-                child: displayCar(snapshot),
-              );
-            },
-          ),*/
-      // _showList(),
-      //camera,
-      //  new Container(),
-      //  new FavoritesScreen(carList),
-      //      ],
-      //    ),
     );
   }
-/*
-  Widget displayCar(DataSnapshot snapshot) {
-    Car car = Car.fromSnapshot(snapshot);
-    return new HomeUI(car);
-  }
-  */
-
 }

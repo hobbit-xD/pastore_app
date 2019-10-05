@@ -173,10 +173,7 @@ class CarPageState extends State<CarPage> {
         },
         autoplay: true,
         itemCount: car.postImages.length,
-        pagination: new SwiperPagination(
-          margin: new EdgeInsets.all(10.0),
-        ),
-        control: new SwiperControl(color: AppTheme.orange),
+      //  control: new SwiperControl(color: AppTheme.orange),
       ),
     );
 

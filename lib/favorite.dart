@@ -44,7 +44,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
                   onTap: () => Navigator.of(context).push(new PageRouteBuilder(
                       pageBuilder: (_, __, ___) =>
                           new CarPage(favoriteCars[index]))),
-                  leading: Icon(Icons.airport_shuttle),
+                  leading: Icon(Icons.star),
                   title: Text(
                     favoriteCars[index].title,
                     style: TextStyle(

@@ -110,7 +110,7 @@ class searchPage extends SearchDelegate<Car> {
               // showResults(context);
               close(context, list[index]);
             },
-            //leading: Icon(Icons.airport_shuttle),
+            leading: Icon(Icons.search),
             title: Text(list[index].title,
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.normal))));

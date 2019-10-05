@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           canvasColor: AppTheme.notWhite,
           accentColor: AppTheme.orange,
           appBarTheme: new AppBarTheme(color: AppTheme.notWhite),
-          primaryColor: AppTheme.blue),
+          primaryColor: AppTheme.orange),
       home: Home(),
     );
   }

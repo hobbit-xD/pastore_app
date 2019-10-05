@@ -176,7 +176,7 @@ class CarPageState extends State<CarPage> {
         pagination: new SwiperPagination(
           margin: new EdgeInsets.all(10.0),
         ),
-        control: new SwiperControl(color: AppTheme.blue),
+        control: new SwiperControl(color: AppTheme.orange),
       ),
     );
 

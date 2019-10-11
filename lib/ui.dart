@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pastore_app/style.dart';
 import 'CarPage.dart';
 import 'car.dart';
@@ -46,19 +48,31 @@ class CarState extends State<CarRow> {
 
   @override
   Widget build(BuildContext context) {
-    final baseTextStyle = const TextStyle(fontFamily: 'Poppins', height: 1.2);
 
-    final headerTextStyle = baseTextStyle.copyWith(
-        color: AppTheme.darkBlue, fontSize: 17.0, fontWeight: FontWeight.w600);
+    double defaultScreenWidth = 800.0;
+    double defaultScreenHeight = 1280.0;
 
-    final regularTextStyle = baseTextStyle.copyWith(
-        color: AppTheme.lightText, fontSize: 9.0, fontWeight: FontWeight.w400);
+    ScreenUtil.instance = ScreenUtil(
+      width: defaultScreenWidth,
+      height: defaultScreenHeight,
+      allowFontScaling: true,
+    )..init(context);
+
+    final headerTextStyle = TextStyle(
+        color: AppTheme.darkBlue,
+        fontSize: ScreenUtil.instance.setSp(17.0),
+        fontWeight: FontWeight.w600);
+
+    final regularTextStyle = TextStyle(
+        color: AppTheme.nearlyBlack,
+        fontSize: ScreenUtil.instance.setSp(16.0),
+        fontWeight: FontWeight.w400);
 
     final subHeaderTextStyle = regularTextStyle.copyWith(
-      fontSize: 14.0,
+      fontSize: ScreenUtil.instance.setSp(15.0),
     );
 
-    final carCardContent = new Container(
+    /*  final carCardContent = new Container(
       margin: new EdgeInsets.fromLTRB(113.0, 20.0, 13.0, 16.0),
       constraints: new BoxConstraints.expand(),
       child: new Column(
@@ -181,8 +195,8 @@ class CarState extends State<CarRow> {
         ],
       ),
     );
-
-    final carThumb = new Container(
+*/
+    /* final carThumb = new Container(
       margin: EdgeInsets.symmetric(vertical: 30.0),
       alignment: FractionalOffset.centerLeft,
       width: 150.0,
@@ -199,11 +213,143 @@ class CarState extends State<CarRow> {
                 offset: new Offset(1.0, 6.0))
           ]),
     );
+*/
+    final carThumb = new Container(
+      width: ScreenUtil.instance.setWidth(130.0),
+      height: ScreenUtil.instance.setHeight(83.66),
+      decoration: BoxDecoration(
+          border: Border.all(color: AppTheme.nearlyBlack, width: 1.0),
+          borderRadius: BorderRadius.circular(5.0),
+          image: new DecorationImage(
+              image: NetworkImage(car.image), fit: BoxFit.fill),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+                color: AppTheme.deactivedText,
+                blurRadius: 8.0,
+                offset: new Offset(1.0, 6.0))
+          ]),
+    );
 
-    final carCard = new Container(
+    final _riferimento = new Row(
+      children: <Widget>[
+        new Text("Rif: ",
+            style: regularTextStyle.copyWith(
+                color: AppTheme.darkBlue, fontWeight: FontWeight.bold)),
+        new Text(car.rif ?? '-',
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final _anno = new Row(
+      children: <Widget>[
+        new Text("Anno: ",
+            style: regularTextStyle.copyWith(
+                color: AppTheme.darkBlue, fontWeight: FontWeight.bold)),
+        new Text(car.anno ?? '-',
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final _emissioni = new Row(
+      children: <Widget>[
+        new Text(
+          "Emissioni: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.emissioni ?? '-',
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final _percorrenza = new Row(
+      children: <Widget>[
+        new Text(
+          "Percorrenza: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.km,
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+
+    final carDetails = new Container(
+      margin: EdgeInsets.only(left: 8.0),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _riferimento,
+          _anno,
+          _emissioni,
+          _percorrenza,
+        ],
+      ),
+    );
+
+    final carCardContent = new Padding(
+      padding: EdgeInsets.symmetric(horizontal: ScreenUtil.instance.setWidth(8.0), vertical: ScreenUtil.instance.setHeight(0)),
+      child: new Column(
+        children: <Widget>[
+          new SizedBox(
+            height: ScreenUtil.instance.setHeight(12.0),
+          ),
+          new Text(car.title,
+              style: headerTextStyle, textAlign: TextAlign.center),
+          new SizedBox(
+            height: ScreenUtil.instance.setHeight(5.0),
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              new Text(
+                car.price,
+                style: headerTextStyle,
+              ),
+              new Text(" - ", style: regularTextStyle),
+              new Text("Iva Esclusa",
+                  style: regularTextStyle.copyWith(
+                      decoration: TextDecoration.underline))
+            ],
+          ),
+          new SizedBox(
+            height: ScreenUtil.instance.setHeight(5.0),
+          ),
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              carThumb,
+              carDetails,
+            ],
+          ),
+          new Container(
+              child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              new Text("Aggiungimi ai prefereriti ", style: subHeaderTextStyle),
+              GestureDetector(
+                onTap: _toggleFavorite,
+                child: (car.isFavorite
+                    ? Icon(
+                        Icons.favorite,
+                        color: AppTheme.orangeText,
+                      )
+                    : Icon(Icons.favorite_border, color: AppTheme.darkText)),
+              )
+            ],
+          )),
+        ],
+      ),
+    );
+
+    final carCard = Container(
+      width: ScreenUtil.instance.setWidth(288.0),
+      height: ScreenUtil.instance.setHeight(200.0),
       child: carCardContent,
-      height: 185.0,
-      margin: EdgeInsets.only(left: 46.0),
+      // margin: EdgeInsets.only(left: 46.0),
       decoration: new BoxDecoration(
           color: AppTheme.nearlyWhite,
           shape: BoxShape.rectangle,
@@ -217,15 +363,15 @@ class CarState extends State<CarRow> {
     );
 
     return new Container(
-      height: 185.0,
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-      child: new Stack(
-        children: <Widget>[
-          carCard,
-          carThumb,
-        ],
-      ),
-    );
+        margin: EdgeInsets.symmetric(vertical: ScreenUtil.instance.setHeight(8.0), horizontal: ScreenUtil.instance.setHeight(16.0)),
+       /* child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth:  ScreenUtil.instance.setWidth(288.0),
+              minHeight: ScreenUtil.instance.setHeight(200.0),
+              maxHeight: ScreenUtil.instance.setHeight(200.0),
+              maxWidth: ScreenUtil.screenWidth
+            ),*/
+            child: carCard);//);
   }
 
   void _toggleFavorite() {

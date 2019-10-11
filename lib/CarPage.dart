@@ -27,143 +27,130 @@ class CarPageState extends State<CarPage> {
 
   @override
   Widget build(BuildContext context) {
-    final baseTextStyle = const TextStyle(fontFamily: 'Poppins', height: 1.2);
+    final headerTextStyle = TextStyle(
+        color: AppTheme.darkBlue, fontSize: 15.0, fontWeight: FontWeight.w600);
 
-    final headerTextStyle = baseTextStyle.copyWith(
-        color: AppTheme.darkerBlue,
-        fontSize: 16.0,
-        fontWeight: FontWeight.w600);
-
-    final subHeaderTextStyle = baseTextStyle.copyWith(
+    final regularTextStyle = TextStyle(
         color: AppTheme.nearlyBlack,
         fontSize: 14.0,
         fontWeight: FontWeight.w400);
 
     List<dynamic> listDetails = car.details;
 
-    final carCardContent = new Container(
-      margin: new EdgeInsets.symmetric(horizontal: 16.0),
-      constraints: new BoxConstraints.expand(),
+    final _riferimento = new Row(
+      children: <Widget>[
+        new Text("Rif: ",
+            style: regularTextStyle.copyWith(
+                color: AppTheme.darkBlue, fontWeight: FontWeight.bold)),
+        new Text(car.rif ?? '-',
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final _anno = new Row(
+      children: <Widget>[
+        new Text("Anno: ",
+            style: regularTextStyle.copyWith(
+                color: AppTheme.darkBlue, fontWeight: FontWeight.bold)),
+        new Text(car.anno ?? '-',
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final _emissioni = new Row(
+      children: <Widget>[
+        new Text(
+          "Emissioni: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.emissioni ?? '-',
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final _percorrenza = new Row(
+      children: <Widget>[
+        new Text(
+          "Percorrenza: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.km,
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+
+    final carDetails = new Container(
+      margin: EdgeInsets.only(left: 8.0),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Container(
-            height: 4.0,
-          ),
-          new Text(
-            car.title,
-            style: headerTextStyle,
-          ),
-          new Container(
-            height: 4.0,
-          ),
-          new Row(children: <Widget>[
-            new Text(
-              "Rif: ",
-              style: subHeaderTextStyle.copyWith(
-                  color: AppTheme.darkText, fontWeight: FontWeight.w600),
-            ),
-            new Text(
-              car.rif,
-              style: subHeaderTextStyle,
-            ),
-          ]),
-          new Container(
-            height: 4.0,
-          ),
+          _riferimento,
+          _anno,
+          _emissioni,
+          _percorrenza,
+        ],
+      ),
+    );
+
+    final carCardContent = new Padding(
+      padding: EdgeInsets.all(10.0),
+      child: new Column(
+        children: <Widget>[
+          new Text(car.title,
+              style: headerTextStyle, textAlign: TextAlign.center),
+          new SizedBox(height: 5.0),
           new Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              new Expanded(
-                  child: new Row(
-                children: <Widget>[
-                  new Text(
-                    "Anno: ",
-                    style: subHeaderTextStyle.copyWith(
-                        color: AppTheme.darkText, fontWeight: FontWeight.w600),
-                  ),
-                  new Text(
-                    car.anno,
-                    style: subHeaderTextStyle,
-                  ),
-                ],
-              )),
-              new Expanded(
-                  child: new Row(
-                children: <Widget>[
-                  car.emissioni != null
-                      ? new Text("Emissioni: " + car.emissioni,
-                          style: subHeaderTextStyle)
-                      : new SizedBox(),
-                ],
-              )),
+              new Text(
+                car.price,
+                style: headerTextStyle,
+              ),
+              new Text(" - ", style: regularTextStyle),
+              new Text("Iva Esclusa",
+                  style: regularTextStyle.copyWith(
+                      decoration: TextDecoration.underline))
             ],
           ),
-          new Container(
-            height: 4.0,
-          ),
+          new SizedBox(height: 5.0),
           new Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              new Expanded(
-                  child: new Row(
-                children: <Widget>[
-                  new Text(
-                    "Percorrenza: ",
-                    style: subHeaderTextStyle.copyWith(
-                        color: AppTheme.darkText, fontWeight: FontWeight.w600),
-                  ),
-                  new Text(
-                    car.km,
-                    style: subHeaderTextStyle,
-                  ),
-                ],
-              )),
-              new Expanded(
-                  child: new Row(
-                children: <Widget>[
-                  new Text(
-                    "Prezzo: ",
-                    style: subHeaderTextStyle.copyWith(
-                        color: AppTheme.darkText,
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  new Text(
-                    car.price,
-                    style: subHeaderTextStyle,
-                  ),
-                  new Text(
-                    " IVA esclusa",
-                    style: subHeaderTextStyle,
-                  )
-                ],
-              )),
+              carDetails,
             ],
           ),
         ],
       ),
     );
 
-    final carCard = new Container(
-      margin: new EdgeInsets.fromLTRB(50.0, 12.0, 50.0, 0.0),
-      child: carCardContent,
-      height: 150.0,
+    final carCard = Container(
+      constraints: BoxConstraints(
+          maxHeight: 155.0,
+          minHeight: 155.0,
+          maxWidth: MediaQuery.of(context).size.width,
+          minWidth: MediaQuery.of(context).size.width),
+      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: new BoxDecoration(
-          border: Border.all(color: AppTheme.lightBlue, width: 2.0),
           color: AppTheme.lighterBlue,
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
+          border: Border.all(color: AppTheme.lightBlue, width: 2.0),
           boxShadow: <BoxShadow>[
             new BoxShadow(
                 color: Colors.black12,
-                blurRadius: 4.0,
+                blurRadius: 5.0,
                 offset: new Offset(0.0, 6.0))
           ]),
+      child: carCardContent,
     );
 
     final slider = new ConstrainedBox(
       constraints: new BoxConstraints.expand(
-          width: MediaQuery.of(context).size.width, height: 400.0),
+        width: MediaQuery.of(context).size.width,
+        height: 250,
+      ),
       child: new Swiper(
         itemBuilder: (BuildContext context, int index) {
           return new Image.network(
@@ -173,12 +160,12 @@ class CarPageState extends State<CarPage> {
         },
         autoplay: true,
         itemCount: car.postImages.length,
-      //  control: new SwiperControl(color: AppTheme.orange),
+        //  control: new SwiperControl(color: AppTheme.orange),
       ),
     );
 
     final carDescrContent = new Container(
-        margin: EdgeInsets.only(top: 90.0),
+        margin: EdgeInsets.only(top: 100.0),
         child: new ListView.builder(
             controller: _controller,
             itemCount: (listDetails != null) ? listDetails.length : 0,
@@ -198,15 +185,15 @@ class CarPageState extends State<CarPage> {
                       ),
                       new Text(
                         map.values.elementAt(1),
-                        style: subHeaderTextStyle.copyWith(
-                            color: AppTheme.darkText),
+                        style:
+                            regularTextStyle.copyWith(color: AppTheme.darkText),
                       ),
                     ],
                   ));
             }));
 
     final carDescr = new Container(
-      margin: new EdgeInsets.fromLTRB(16.0, 100.0, 16.0, 24.0),
+      margin: new EdgeInsets.fromLTRB(16.0, 78.0, 16.0, 24.0),
       child: carDescrContent,
       decoration: new BoxDecoration(
           color: AppTheme.nearlyWhite,
@@ -231,6 +218,7 @@ class CarPageState extends State<CarPage> {
             child: new Column(
               children: <Widget>[
                 slider,
+                SizedBox(height: 20.0),
                 new Stack(
                   children: <Widget>[
                     carDescr,
@@ -245,8 +233,8 @@ class CarPageState extends State<CarPage> {
         backgroundColor: AppTheme.orange,
         mini: false,
         child: car.isFavorite
-            ? Icon(Icons.bookmark, color: AppTheme.blue)
-            : Icon(Icons.bookmark_border, color: AppTheme.nearlyWhite),
+            ? Icon(Icons.favorite, color: AppTheme.blue)
+            : Icon(Icons.favorite_border, color: AppTheme.nearlyWhite),
       ),
     );
   }

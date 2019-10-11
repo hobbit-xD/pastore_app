@@ -32,7 +32,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   'Non hai ancora aggiunto nessun veicolo nei preferiti',
-                  style: headerTextStyle,
+                  style: headerTextStyle,textAlign: TextAlign.center,
                 ),
               )
             : ListView.separated(

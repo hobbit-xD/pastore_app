@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:pastore_app/CarPage.dart';
-import 'package:pastore_app/ui.dart';
+import 'package:pastore_app/ui2.dart';
 import 'car.dart';
 import 'favorite.dart';
 import 'firebase_utils.dart';
@@ -102,16 +101,17 @@ class HomeState extends State<Home> {
 
   Widget _showList() {
     if (carList.length > 0) {
-      return new ListView.builder(
+      return ListView.builder(
           shrinkWrap: true,
           itemCount: carList.length,
           itemBuilder: (BuildContext context, int index) {
-            return new HomeUI(carList[index]);
+            return HomePageUi(carList[index]);
           });
     } else {
       return new Center(
-        child: new Text("Nessun veicolo presente"),
-      );
+          child:
+              CircularProgressIndicator() //new Text("Nessun veicolo presente"),
+          );
     }
   }
 
@@ -152,7 +152,7 @@ class HomeState extends State<Home> {
                 },
               )),
           new BottomNavigationBarItem(
-              title: new Text(''), icon: new Icon(Icons.bookmark_border)),
+              title: new Text(''), icon: new Icon(Icons.favorite_border)),
         ],
       ),
       body: new PageView.builder(

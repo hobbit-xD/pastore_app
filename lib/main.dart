@@ -35,7 +35,7 @@ class Home extends StatefulWidget {
   HomeState createState() => new HomeState();
 }
 
-const kExpandedHeight = 220.0;
+const kExpandedHeight = 250.0;
 
 class HomeState extends State<Home> {
   FirebaseUtils databaseUtils;

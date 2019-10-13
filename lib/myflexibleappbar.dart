@@ -7,13 +7,12 @@ class MyFlexiableAppBar extends StatelessWidget {
 
   const MyFlexiableAppBar();
 
-
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
 
     final headerTextStyle = TextStyle(
-        color: AppTheme.darkBlue, fontSize: 27.0, fontWeight: FontWeight.w600);
+        color: AppTheme.darkBlue, fontSize: 30.0, fontWeight: FontWeight.w600);
 
     final regularTextStyle = TextStyle(
         color: AppTheme.nearlyBlack,
@@ -46,26 +45,17 @@ class MyFlexiableAppBar extends StatelessWidget {
           //color:Colors.red,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.location_city),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Container(
-                    //color:Colors.red,
-                    child:
-                        new Text("Pastore Autoveicoli", style: headerTextStyle),
-                  ),
-                ],
+              Container(
+                //color:Colors.red,
+                child: new Text("Pastore Autoveicoli", style: headerTextStyle),
               ),
               SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.location_on),
+                  Icon(Icons.near_me),
                   SizedBox(
                     width: 10.0,
                   ),
@@ -95,7 +85,7 @@ class MyFlexiableAppBar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.location_on),
+                  Icon(Icons.near_me),
                   SizedBox(
                     width: 10.0,
                   ),
@@ -116,6 +106,22 @@ class MyFlexiableAppBar extends StatelessWidget {
                       onPressed: _launchTELVC,
                       child: Text(
                         "0161294638",
+                        style: regularTextStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.language),
+                  Container(
+                    //color:Colors.red,
+                    child: new FlatButton(
+                      onPressed: _launchTELVC,
+                      child: Text(
+                        "www.pastoreautoveicoli.it",
                         style: regularTextStyle,
                       ),
                     ),

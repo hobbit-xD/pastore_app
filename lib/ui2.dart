@@ -104,6 +104,7 @@ class HomePageUiState extends State<HomePageUi> {
     final carCardContent = new Padding(
       padding: EdgeInsets.all(10.0),
       child: new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Text(car.title,
               style: headerTextStyle, textAlign: TextAlign.center),
@@ -171,7 +172,7 @@ class HomePageUiState extends State<HomePageUi> {
       child: Container(
           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           constraints: BoxConstraints(
-              maxHeight: 195.0,
+              maxHeight: 210.0,
               minHeight: 195.0,
               maxWidth: MediaQuery.of(context).size.width,
               minWidth: MediaQuery.of(context).size.width),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pastore_app/style.dart';
 import 'CarPage.dart';
 import 'car.dart';
 
@@ -20,19 +21,31 @@ class FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final baseTextStyle = const TextStyle(fontFamily: 'Poppins', height: 1.2);
+    final headerTextStyle = TextStyle(
+        color: AppTheme.darkerBlue, fontSize: 27.0, fontWeight: FontWeight.w600);
 
-    final headerTextStyle = baseTextStyle.copyWith(
-        color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w600);
+    final regularTextStyle = TextStyle(
+        color: AppTheme.nearlyBlack,
+        fontSize: 16.0,
+        fontWeight: FontWeight.w400);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Preferiti",
+          style: headerTextStyle,
+        ),
+        elevation: 0.0,
+      ),
       body: new Center(
         child: favoriteCars.isEmpty
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   'Non hai ancora aggiunto nessun veicolo nei preferiti',
-                  style: headerTextStyle,textAlign: TextAlign.center,
+                  style: headerTextStyle.copyWith(
+                      color: AppTheme.nearlyBlack, fontSize: 20.0),
+                  textAlign: TextAlign.center,
                 ),
               )
             : ListView.separated(
@@ -47,8 +60,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
                   leading: Icon(Icons.star),
                   title: Text(
                     favoriteCars[index].title,
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.normal),
+                    style: regularTextStyle,
                   ),
                   trailing: new IconButton(
                       icon: Icon(Icons.close),
@@ -64,4 +76,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
       ),
     );
   }
+
+
+  int get favoriteLength => favoriteCars.length;
 }

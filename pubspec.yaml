@@ -29,7 +29,8 @@ dev_dependencies:
     sdk: flutter
   firebase_database: ^3.0.7
   flutter_swiper : ^1.1.6
-  flutter_screenutil: ^0.6.0
+  share: ^0.6.2+3
+  url_launcher: ^5.1.6
 
 
 # For information on the generic Dart part of this file, see the

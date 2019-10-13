@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:pastore_app/style.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'car.dart';
 
 class CarPage extends StatefulWidget {
@@ -27,6 +29,8 @@ class CarPageState extends State<CarPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     final headerTextStyle = TextStyle(
         color: AppTheme.darkBlue, fontSize: 15.0, fontWeight: FontWeight.w600);
 
@@ -97,6 +101,7 @@ class CarPageState extends State<CarPage> {
     final carCardContent = new Padding(
       padding: EdgeInsets.all(10.0),
       child: new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           new Text(car.title,
               style: headerTextStyle, textAlign: TextAlign.center),
@@ -127,7 +132,7 @@ class CarPageState extends State<CarPage> {
 
     final carCard = Container(
       constraints: BoxConstraints(
-          maxHeight: 155.0,
+          maxHeight: 170.0,
           minHeight: 155.0,
           maxWidth: MediaQuery.of(context).size.width,
           minWidth: MediaQuery.of(context).size.width),
@@ -165,7 +170,7 @@ class CarPageState extends State<CarPage> {
     );
 
     final carDescrContent = new Container(
-        margin: EdgeInsets.only(top: 100.0),
+        margin: EdgeInsets.only(top: 110.0),
         child: new ListView.builder(
             controller: _controller,
             itemCount: (listDetails != null) ? listDetails.length : 0,
@@ -207,10 +212,42 @@ class CarPageState extends State<CarPage> {
           ]),
     );
 
+
+    _launchTEL() async {
+      const tel = 'tel:+390158123128';
+      if (await canLaunch(tel)) {
+        await launch(tel);
+      } else {
+        throw 'Impossibile chiamare il numero $tel';
+      }
+    }
+
+     _launchMAIL() async {
+      var mail = 'mailto:info@pastoreautoveicoli.it?subject=Richiesta informazioni rif.${car.rif}&body=${car.title}\n\n${car.link}';
+      if (await canLaunch(mail)) {
+        await launch(mail);
+      } else {
+        throw 'Impossibile chiamare il numero $mail';
+      }
+    }
+
     return Scaffold(
       appBar: new AppBar(
-        elevation: 0.0,
-        iconTheme: new IconThemeData(color: AppTheme.orangeText),
+        elevation: 1.0,
+        iconTheme: new IconThemeData(color: AppTheme.darkBlue),
+        backgroundColor: AppTheme.notWhite,
+        actions: <Widget>[
+          new IconButton(icon: Icon(Icons.call), onPressed: _launchTEL),
+          new IconButton(icon: Icon(Icons.mail_outline), onPressed: _launchMAIL),
+          new IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                Share.share("${car.title}\n${car.link}",
+                    subject:
+                        "Ho trovato questo veicolo su Pastore Autoveicoli");
+              }),
+
+        ],
       ),
       body: new SingleChildScrollView(
           controller: _controller,
@@ -237,6 +274,7 @@ class CarPageState extends State<CarPage> {
             : Icon(Icons.favorite_border, color: AppTheme.nearlyWhite),
       ),
     );
+
   }
 
   void _toggleFavorite() async {
@@ -248,4 +286,6 @@ class CarPageState extends State<CarPage> {
       }
     });
   }
+
+
 }

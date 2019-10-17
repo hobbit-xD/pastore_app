@@ -4,5 +4,5 @@ My first flutter application for Pastore.
 Workin on..
 
 # TODO
-- Implement MOOR database for make available  favorites also after closing app.
+- Some code cleaning
 - Textrecognition for search

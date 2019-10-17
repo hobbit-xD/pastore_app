@@ -1,28 +1,3 @@
-/*
-import 'package:flutter/material.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-
-class ImageDetail extends StatefulWidget {
-  final String filePath;
-  ImageDetail(this.filePath);
-
-  @override
-  _ImageDetailState createState() => new _ImageDetailState(filePath);
-}
-
-class _ImageDetailState extends State<ImageDetail> {
-  final String filePath;
-  _ImageDetailState(this.filePath);
-
-  String recognizedText = "Loading....";
-
-  @override
-  Widget build(BuildContext context) {
-    return null;
-  }
-}
-*/
-
 import 'package:flutter/material.dart';
 import 'car.dart';
 
@@ -42,7 +17,7 @@ class searchPage extends SearchDelegate<Car> {
   }
 
   @override
-  String get searchFieldLabel => "Cerca";
+  String get searchFieldLabel => "Cerca...";
 
   @override
   List<Widget> buildActions(BuildContext context) {

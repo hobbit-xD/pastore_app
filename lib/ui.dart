@@ -1,6 +1,7 @@
+/*
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+//import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pastore_app/style.dart';
 import 'CarPage.dart';
 import 'car.dart';
@@ -384,3 +385,4 @@ class CarState extends State<CarRow> {
     });
   }
 }
+*/

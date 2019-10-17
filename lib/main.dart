@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:pastore_app/CarPage.dart';
-import 'package:pastore_app/myappbar.dart';
+import 'package:pastore_app/favorites_database.dart';
 import 'package:pastore_app/myflexibleappbar.dart';
 import 'package:pastore_app/ui2.dart';
 import 'car.dart';
@@ -35,7 +35,7 @@ class Home extends StatefulWidget {
   HomeState createState() => new HomeState();
 }
 
-const kExpandedHeight = 250.0;
+const kExpandedHeight = 240.0;
 
 class HomeState extends State<Home> {
   FirebaseUtils databaseUtils;
@@ -48,6 +48,8 @@ class HomeState extends State<Home> {
   StreamSubscription<Event> _onAddedSubscription;
   StreamSubscription<Event> _onChangedSubscription;
 
+  MyDatabase myDatabase;
+
   @override
   void initState() {
     databaseUtils = new FirebaseUtils();
@@ -58,7 +60,9 @@ class HomeState extends State<Home> {
     _onAddedSubscription = _carQuery.onChildAdded.listen(_onEntryAdded);
     _onChangedSubscription = _carQuery.onChildChanged.listen(_onEntryChanged);
 
-    _scrollController = ScrollController()..addListener(() => setState(() {}));
+    // _scrollController = ScrollController()..addListener(() => setState(() {}));
+
+    myDatabase = MyDatabase();
 
     super.initState();
   }
@@ -105,14 +109,13 @@ class HomeState extends State<Home> {
     });
   }
 
-/*
-  Widget _showList() {
+  Widget _showListView() {
     if (carList.length > 0) {
       return ListView.builder(
           shrinkWrap: true,
           itemCount: carList.length,
           itemBuilder: (BuildContext context, int index) {
-            return HomePageUi(carList[index]);
+            return HomePageUi(carList[index], myDatabase);
           });
     } else {
       return new Center(
@@ -121,41 +124,68 @@ class HomeState extends State<Home> {
           );
     }
   }
-*/
+/*
   ScrollController _scrollController;
 
   bool get _showTitle {
     return _scrollController.hasClients &&
         _scrollController.offset > kExpandedHeight - kToolbarHeight;
   }
+  */
+/*
+  Widget _silverList() {
+    if (carList.length > 0) {
+/*      return SliverList(
+          delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return HomePageUi(carList[index]);
+        },
+        childCount: carList.length,
+      ));
+      */
 
+      return SliverFillRemaining(
+        child: _showListView(),
+      );
+    } else {
+      return new Center(child: CircularProgressIndicator());
+    }
+  }
+*/
+/*
   Widget _showList() {
     return new CustomScrollView(
-      controller: _scrollController,
+//      controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
+          elevation: 0.0,
           expandedHeight: kExpandedHeight,
-          floating: false,
-          pinned: true,
-          title: _showTitle ? MyAppBar() : null,
-          flexibleSpace: _showTitle
+  //        floating: false,
+   //       pinned: true,
+     //     title: MyFlexiableAppBar(),//_showTitle ? MyAppBar() : null,
+          //bottom: PreferredSize(preferredSize: Size(10.0,10.0),child: Text(''),),
+          flexibleSpace: /*_showTitle
               ? null
-              : FlexibleSpaceBar(
-                  background: MyFlexiableAppBar()
-                ),
+              : */FlexibleSpaceBar(background: MyFlexiableAppBar()),
         ),
-        SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            if (carList.length > 0) {
-              return HomePageUi(carList[index]);
-            } else {
-              return new Center(child: CircularProgressIndicator());
-            }
-          },
-          childCount: carList.length,
-        ))
+        _silverList(),
       ],
+    );
+  }
+*/
+
+  Widget _showList() {
+    return new SafeArea(
+      child: Column(
+        children: <Widget>[
+          new Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              width: MediaQuery.of(context).size.width,
+              height: kExpandedHeight,
+              child: MyFlexiableAppBar()),
+          new Expanded(child: _showListView())
+        ],
+      ),
     );
   }
 
@@ -164,7 +194,7 @@ class HomeState extends State<Home> {
     List<Widget> _myPages = [
       _showList(),
       Container(),
-      FavoritesScreen(carList)
+      FavoritesScreen(carList, myDatabase)
     ];
 
     return Scaffold(
@@ -189,7 +219,8 @@ class HomeState extends State<Home> {
                       context: context, delegate: searchPage(carList));
                   if (searchRes != null)
                     Navigator.of(context).push(new PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new CarPage(searchRes)));
+                        pageBuilder: (_, __, ___) =>
+                            new CarPage(searchRes, myDatabase)));
                 },
               )),
           new BottomNavigationBarItem(

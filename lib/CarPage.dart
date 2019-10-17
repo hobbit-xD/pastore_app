@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:pastore_app/favorites_database.dart';
 import 'package:pastore_app/style.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,18 +9,20 @@ import 'car.dart';
 
 class CarPage extends StatefulWidget {
   final Car car;
+  final MyDatabase myDatabase;
 
-  CarPage(this.car);
+  CarPage(this.car, this.myDatabase);
 
   @override
-  State<StatefulWidget> createState() => CarPageState(car);
+  State<StatefulWidget> createState() => CarPageState(car, myDatabase);
 }
 
 class CarPageState extends State<CarPage> {
   final Car car;
+  final MyDatabase myDatabase;
   ScrollController _controller;
 
-  CarPageState(this.car);
+  CarPageState(this.car, this.myDatabase);
 
   @override
   void initState() {
@@ -29,8 +32,6 @@ class CarPageState extends State<CarPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     final headerTextStyle = TextStyle(
         color: AppTheme.darkBlue, fontSize: 15.0, fontWeight: FontWeight.w600);
 
@@ -151,20 +152,18 @@ class CarPageState extends State<CarPage> {
       child: carCardContent,
     );
 
-    final slider = new ConstrainedBox(
-      constraints: new BoxConstraints.expand(
-        width: MediaQuery.of(context).size.width,
-        height: 250,
-      ),
+    final slider = AspectRatio(
+      aspectRatio: 16 / 10,
       child: new Swiper(
         itemBuilder: (BuildContext context, int index) {
           return new Image.network(
             car.postImages[index],
-            fit: BoxFit.contain,
+            fit: BoxFit.fitWidth,
           );
         },
         autoplay: true,
         itemCount: car.postImages.length,
+
         //  control: new SwiperControl(color: AppTheme.orange),
       ),
     );
@@ -212,7 +211,6 @@ class CarPageState extends State<CarPage> {
           ]),
     );
 
-
     _launchTEL() async {
       const tel = 'tel:+390158123128';
       if (await canLaunch(tel)) {
@@ -222,8 +220,9 @@ class CarPageState extends State<CarPage> {
       }
     }
 
-     _launchMAIL() async {
-      var mail = 'mailto:info@pastoreautoveicoli.it?subject=Richiesta informazioni rif.${car.rif}&body=${car.title}\n\n${car.link}';
+    _launchMAIL() async {
+      var mail =
+          'mailto:info@pastoreautoveicoli.it?subject=Richiesta informazioni rif.${car.rif}&body=${car.title}\n\n${car.link}';
       if (await canLaunch(mail)) {
         await launch(mail);
       } else {
@@ -231,61 +230,79 @@ class CarPageState extends State<CarPage> {
       }
     }
 
-    return Scaffold(
-      appBar: new AppBar(
-        elevation: 1.0,
-        iconTheme: new IconThemeData(color: AppTheme.darkBlue),
-        backgroundColor: AppTheme.notWhite,
-        actions: <Widget>[
-          new IconButton(icon: Icon(Icons.call), onPressed: _launchTEL),
-          new IconButton(icon: Icon(Icons.mail_outline), onPressed: _launchMAIL),
-          new IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () {
-                Share.share("${car.title}\n${car.link}",
-                    subject:
-                        "Ho trovato questo veicolo su Pastore Autoveicoli");
-              }),
+    final _favoriteButton = StreamBuilder<bool>(
+        stream: myDatabase.isFavorite(int.parse(car.key)),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data) {
+            return FloatingActionButton(
+                onPressed: () => myDatabase.removeFavorite(int.parse(car.key)),
+                child: Icon(Icons.favorite, color: AppTheme.darkBlue));
+          }
+          return FloatingActionButton(
+              onPressed: () => myDatabase.addFavorite(car),
+              child: Icon(Icons.favorite_border, color: AppTheme.darkBlue));
+        });
 
-        ],
-      ),
-      body: new SingleChildScrollView(
-          controller: _controller,
-          child: SafeArea(
-            child: new Column(
-              children: <Widget>[
-                slider,
-                SizedBox(height: 20.0),
-                new Stack(
-                  children: <Widget>[
-                    carDescr,
-                    carCard,
-                  ],
-                )
-              ],
+    return Scaffold(
+        appBar: new AppBar(
+          elevation: 1.0,
+          iconTheme: new IconThemeData(color: AppTheme.darkBlue),
+          backgroundColor: AppTheme.notWhite,
+          actions: <Widget>[
+            new Container(
+              child: IconButton(
+                icon: Icon(Icons.call),
+                onPressed: _launchTEL,
+              ),
+              decoration:
+                  BoxDecoration(color: AppTheme.orange, shape: BoxShape.circle),
             ),
-          )),
-      floatingActionButton: new FloatingActionButton(
+            new Container(
+              decoration:
+                  BoxDecoration(color: AppTheme.orange, shape: BoxShape.circle),
+              child: IconButton(
+                icon: Icon(Icons.mail_outline),
+                onPressed: _launchMAIL,
+              ),
+            ),
+            new Container(
+              decoration:
+                  BoxDecoration(color: AppTheme.orange, shape: BoxShape.circle),
+              child: IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {
+                    Share.share("${car.title}\n${car.link}",
+                        subject:
+                            "Ho trovato questo veicolo su Pastore Autoveicoli");
+                  }),
+            )
+          ],
+        ),
+        body: new SingleChildScrollView(
+            controller: _controller,
+            child: SafeArea(
+              child: new Column(
+                children: <Widget>[
+                  slider,
+                  SizedBox(height: 20.0),
+                  new Stack(
+                    children: <Widget>[
+                      carDescr,
+                      carCard,
+                    ],
+                  )
+                ],
+              ),
+            )),
+        floatingActionButton:
+            _favoriteButton /*new FloatingActionButton(
         onPressed: _toggleFavorite,
         backgroundColor: AppTheme.orange,
         mini: false,
         child: car.isFavorite
-            ? Icon(Icons.favorite, color: AppTheme.blue)
-            : Icon(Icons.favorite_border, color: AppTheme.nearlyWhite),
-      ),
-    );
-
+            ? Icon(Icons.favorite, color: AppTheme.darkBlue)
+            : Icon(Icons.favorite_border, color: AppTheme.darkBlue),
+      ),*/
+        );
   }
-
-  void _toggleFavorite() async {
-    setState(() {
-      if (car.isFavorite) {
-        car.setFavorite(false);
-      } else {
-        car.setFavorite(true);
-      }
-    });
-  }
-
-
 }

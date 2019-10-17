@@ -1,21 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pastore_app/style.dart';
+import 'package:pastore_app/favorites_database.dart';
 import 'CarPage.dart';
 import 'car.dart';
 
 class HomePageUi extends StatefulWidget {
   final Car car;
-  HomePageUi(this.car);
+  final MyDatabase myDatabase;
+
+  HomePageUi(this.car, this.myDatabase);
 
   @override
-  HomePageUiState createState() => new HomePageUiState(car);
+  HomePageUiState createState() => new HomePageUiState(car, myDatabase);
 }
 
 class HomePageUiState extends State<HomePageUi> {
   final Car car;
-
-  HomePageUiState(this.car);
+  final MyDatabase myDatabase;
+  HomePageUiState(this.car, this.myDatabase);
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +104,20 @@ class HomePageUiState extends State<HomePageUi> {
       ],
     );
 
+    final _favoriteButton = StreamBuilder<bool>(
+        stream: myDatabase.isFavorite(int.parse(car.key)),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data) {
+            return IconButton(
+                onPressed: () => myDatabase.removeFavorite(int.parse(car.key)),
+                icon: Icon(Icons.favorite, color: AppTheme.orangeText));
+          }
+
+          return IconButton(
+              onPressed: () => myDatabase.addFavorite(car),
+              icon: Icon(Icons.favorite_border, color: AppTheme.darkBlue));
+        });
+
     final carCardContent = new Padding(
       padding: EdgeInsets.all(10.0),
       child: new Column(
@@ -137,15 +154,7 @@ class HomePageUiState extends State<HomePageUi> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               new Text("Aggiungimi ai prefereriti ", style: subHeaderTextStyle),
-              GestureDetector(
-                onTap: _toggleFavorite,
-                child: (car.isFavorite
-                    ? Icon(
-                        Icons.favorite,
-                        color: AppTheme.orangeText,
-                      )
-                    : Icon(Icons.favorite_border, color: AppTheme.darkText)),
-              )
+              _favoriteButton
             ],
           ),
         ],
@@ -167,8 +176,8 @@ class HomePageUiState extends State<HomePageUi> {
     );
 
     return new InkWell(
-      onTap: () => Navigator.of(context).push(
-          new PageRouteBuilder(pageBuilder: (_, __, ___) => new CarPage(car))),
+      onTap: () => Navigator.of(context).push(new PageRouteBuilder(
+          pageBuilder: (_, __, ___) => new CarPage(car, myDatabase))),
       child: Container(
           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           constraints: BoxConstraints(
@@ -179,15 +188,5 @@ class HomePageUiState extends State<HomePageUi> {
           //width: MediaQuery.of(context).size.width,
           child: carCard),
     ); //);
-  }
-
-  void _toggleFavorite() {
-    setState(() {
-      if (car.isFavorite) {
-        car.setFavorite(false);
-      } else {
-        car.setFavorite(true);
-      }
-    });
   }
 }

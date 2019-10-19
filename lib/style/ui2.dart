@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pastore_app/style.dart';
-import 'package:pastore_app/favorites_database.dart';
-import 'CarPage.dart';
-import 'car.dart';
+import 'package:pastore_app/style/style.dart';
+import 'package:pastore_app/database/favorites_database.dart';
+import 'package:pastore_app/screen/carPage.dart';
+import 'package:pastore_app/car.dart';
 
 class HomePageUi extends StatefulWidget {
   final Car car;
@@ -108,14 +108,14 @@ class HomePageUiState extends State<HomePageUi> {
         stream: myDatabase.isFavorite(int.parse(car.key)),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data) {
-            return IconButton(
-                onPressed: () => myDatabase.removeFavorite(int.parse(car.key)),
-                icon: Icon(Icons.favorite, color: AppTheme.orangeText));
+            return GestureDetector(
+                onTap: () => myDatabase.removeFavorite(int.parse(car.key)),
+                child: Icon(Icons.favorite, color: AppTheme.orangeText));
           }
 
-          return IconButton(
-              onPressed: () => myDatabase.addFavorite(car),
-              icon: Icon(Icons.favorite_border, color: AppTheme.darkBlue));
+          return GestureDetector(
+              onTap: () => myDatabase.addFavorite(car),
+              child: Icon(Icons.favorite_border, color: AppTheme.darkBlue));
         });
 
     final carCardContent = new Padding(
@@ -185,7 +185,6 @@ class HomePageUiState extends State<HomePageUi> {
               minHeight: 195.0,
               maxWidth: MediaQuery.of(context).size.width,
               minWidth: MediaQuery.of(context).size.width),
-          //width: MediaQuery.of(context).size.width,
           child: carCard),
     ); //);
   }

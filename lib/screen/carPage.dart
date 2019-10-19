@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:pastore_app/favorites_database.dart';
-import 'package:pastore_app/style.dart';
+import 'package:pastore_app/database/favorites_database.dart';
+import 'package:pastore_app/style/style.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'car.dart';
+import 'package:pastore_app/car.dart';
 
 class CarPage extends StatefulWidget {
   final Car car;
@@ -249,7 +249,7 @@ class CarPageState extends State<CarPage> {
           iconTheme: new IconThemeData(color: AppTheme.darkBlue),
           backgroundColor: AppTheme.notWhite,
           actions: <Widget>[
-            new Container(
+            Container(
               child: IconButton(
                 icon: Icon(Icons.call),
                 onPressed: _launchTEL,
@@ -257,7 +257,8 @@ class CarPageState extends State<CarPage> {
               decoration:
                   BoxDecoration(color: AppTheme.orange, shape: BoxShape.circle),
             ),
-            new Container(
+            SizedBox(width: 5.0),
+            Container(
               decoration:
                   BoxDecoration(color: AppTheme.orange, shape: BoxShape.circle),
               child: IconButton(
@@ -265,7 +266,8 @@ class CarPageState extends State<CarPage> {
                 onPressed: _launchMAIL,
               ),
             ),
-            new Container(
+            SizedBox(width: 5.0),
+            Container(
               decoration:
                   BoxDecoration(color: AppTheme.orange, shape: BoxShape.circle),
               child: IconButton(
@@ -275,7 +277,8 @@ class CarPageState extends State<CarPage> {
                         subject:
                             "Ho trovato questo veicolo su Pastore Autoveicoli");
                   }),
-            )
+            ),
+            SizedBox(width: 5.0),
           ],
         ),
         body: new SingleChildScrollView(

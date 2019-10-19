@@ -99,10 +99,6 @@ class Car {
 
   String get key => _key;
 
-/*  set key(String value) {
-    _key = value;
-  }
-*/
   String get title {
     return _title != '' ? _title : '';
   }
@@ -119,24 +115,6 @@ class Car {
     _rif = value;
   }
 
-  String get codice => _codice;
-
-  set codice(String value) {
-    _codice = value;
-  }
-
-  String get alimentazione => _alimentazione;
-
-  set alimentazione(String value) {
-    _alimentazione = value;
-  }
-
-  String get allestimento => _allestimento;
-
-  set allestimento(String value) {
-    _allestimento = value;
-  }
-
   String get anno {
     if (_anno != null) return _anno;
     return '';
@@ -146,34 +124,10 @@ class Car {
     _anno = value;
   }
 
-  String get assi => _assi;
-
-  set assi(String value) {
-    _assi = value;
-  }
-
-  String get cambio => _cambio;
-
-  set cambio(String value) {
-    _cambio = value;
-  }
-
   String get emissioni => _emissioni;
 
   set emissioni(String value) {
     _emissioni = value;
-  }
-
-  String get colore => _colore;
-
-  set colore(String value) {
-    _colore = value;
-  }
-
-  String get condizioni => _condizioni;
-
-  set condizioni(String value) {
-    _condizioni = value;
   }
 
   String get km => _km;
@@ -188,76 +142,16 @@ class Car {
     _link = value;
   }
 
-  String get posti => _posti;
-
-  set posti(String value) {
-    _posti = value;
-  }
-
-  String get ptt => _ptt;
-
-  set ptt(String value) {
-    _ptt = value;
-  }
-
-  String get passo => _passo;
-
-  set passo(String value) {
-    _passo = value;
-  }
-
-  String get portata => _portata;
-
-  set portata(String value) {
-    _portata = value;
-  }
-
   String get price => _price;
 
   set price(String value) {
     _price = value;
   }
 
-  String get rimorchiabile => _rimorchiabile;
-
-  set rimorchiabile(String value) {
-    _rimorchiabile = value;
-  }
-
-  String get sospensioniAnt => _sospensioniAnt;
-
-  set sospensioniAnt(String value) {
-    _sospensioniAnt = value;
-  }
-
-  String get sospensioniPost => _sospensioniPost;
-
-  set sospensioniPost(String value) {
-    _sospensioniPost = value;
-  }
-
-  String get trazione => _trazione;
-
-  set trazione(String value) {
-    _trazione = value;
-  }
-
   String get descrizione => _descrizione;
 
   set descrizione(String value) {
     _descrizione = value;
-  }
-
-  String get snapshot => _data;
-
-  set snapshot(String value) {
-    _data = value;
-  }
-
-  String get cEmissioni => _cEmissioni;
-
-  set cEmissioni(String value) {
-    _cEmissioni = value;
   }
 
   String get image => _image;
@@ -282,11 +176,5 @@ class Car {
 
   startsWith(String query) {
     return this.title.toUpperCase().contains(query.toUpperCase());
-  }
-
-  bool get isFavorite => _isFavorite;
-
-  setFavorite(bool value) {
-    _isFavorite = value;
   }
 }

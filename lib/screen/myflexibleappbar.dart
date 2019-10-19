@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pastore_app/style.dart';
+import 'package:pastore_app/style/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyFlexiableAppBar extends StatelessWidget {
@@ -9,7 +9,7 @@ class MyFlexiableAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final regularTextStyle = TextStyle(
         color: AppTheme.nearlyBlack,
-        fontSize: 15.0,
+        fontSize: 20.0,
         fontWeight: FontWeight.w400);
 
     _launchTELBI() async {
@@ -76,30 +76,35 @@ class MyFlexiableAppBar extends StatelessWidget {
             fit: BoxFit.contain,
             child: Row(
               children: <Widget>[
-                Icon(Icons.place),
+                Container(
+                  padding: EdgeInsets.all(7.0),
+                  child: Icon(Icons.place, color: AppTheme.darkerBlue),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: AppTheme.orange),
+                ),
                 FlatButton(
                   padding: EdgeInsets.all(0),
                   onPressed: _launchMapsBI,
-                  child: new RichText(
-                    text: TextSpan(
-                        text: "Vigliano B.se",
-                        style: regularTextStyle.copyWith(
-                            fontWeight: FontWeight.bold),
-                        children: [
-                          TextSpan(
-                              text: " - Via Milano,445",
-                              style: regularTextStyle)
-                        ]),
-                  ),
+                  child: new Text("Biella",
+                      style: regularTextStyle.copyWith(color: AppTheme.darkBlue,
+                          fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(width: 5.0),
-                Icon(Icons.phone),
+                Container(
+                    padding: EdgeInsets.all(7.0),
+                    child: Icon(
+                      Icons.phone,
+                      color: AppTheme.darkerBlue,
+                    ),
+                    decoration: BoxDecoration(
+                        color: AppTheme.orange, shape: BoxShape.circle)),
+                SizedBox(width: 5.0),
                 FlatButton(
                   padding: EdgeInsets.all(0),
                   onPressed: _launchTELBI,
                   child: Text(
-                    "0158123128",
-                    style: regularTextStyle,
+                    "+39 015/8123128",
+                    style: regularTextStyle.copyWith(fontSize: 17.0),
                   ),
                 ),
               ],
@@ -109,30 +114,34 @@ class MyFlexiableAppBar extends StatelessWidget {
             fit: BoxFit.contain,
             child: Row(
               children: <Widget>[
-                Icon(Icons.place),
+                Container(
+                  padding: EdgeInsets.all(7.0),
+                  child: Icon(Icons.place, color: AppTheme.darkerBlue),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: AppTheme.orange),
+                ),
                 FlatButton(
                   padding: EdgeInsets.all(0),
                   onPressed: _launchMapsVC,
-                  child: new RichText(
-                    text: TextSpan(
-                        text: "Vercelli",
-                        style: regularTextStyle.copyWith(
-                            fontWeight: FontWeight.bold),
-                        children: [
-                          TextSpan(
-                              text: " - Via Giuseppe Cominetti, 1",
-                              style: regularTextStyle)
-                        ]),
-                  ),
+                  child: new Text("Vercelli",
+                      style: regularTextStyle.copyWith(color: AppTheme.darkBlue,
+                          fontWeight: FontWeight.bold)),
                 ),
-                Icon(Icons.phone),
+                Container(
+                    padding: EdgeInsets.all(7.0),
+                    child: Icon(
+                      Icons.phone,
+                      color: AppTheme.darkerBlue,
+                    ),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: AppTheme.orange)),
                 SizedBox(width: 5.0),
                 FlatButton(
                   padding: EdgeInsets.all(0),
                   onPressed: _launchTELVC,
                   child: Text(
-                    "0161294638",
-                    style: regularTextStyle,
+                    "+39 0161/294638",
+                    style: regularTextStyle.copyWith(fontSize: 17.0),
                   ),
                 ),
               ],
@@ -142,13 +151,22 @@ class MyFlexiableAppBar extends StatelessWidget {
             fit: BoxFit.contain,
             child: Row(
               children: <Widget>[
-                Icon(Icons.language),
+                Container(
+                    child: Container(
+                        padding: EdgeInsets.all(7.0),
+                        child: Icon(
+                          Icons.language,
+                          color: AppTheme.darkerBlue,
+                        )),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: AppTheme.orange)),
+                SizedBox(width: 5.0),
                 FlatButton(
                   padding: EdgeInsets.all(0),
                   onPressed: _launchWEB,
                   child: Text(
                     "www.pastoreautoveicoli.it",
-                    style: regularTextStyle.copyWith(fontSize: 18.0),
+                    style: regularTextStyle,
                   ),
                 ),
               ],

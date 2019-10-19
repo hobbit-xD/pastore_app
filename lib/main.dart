@@ -1,17 +1,23 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:pastore_app/CarPage.dart';
-import 'package:pastore_app/favorites_database.dart';
-import 'package:pastore_app/myflexibleappbar.dart';
-import 'package:pastore_app/ui2.dart';
-import 'car.dart';
-import 'favorite.dart';
-import 'firebase_utils.dart';
-import 'searchPage.dart';
-import 'style.dart';
+import 'package:pastore_app/screen/carPage.dart';
+import 'package:pastore_app/database/favorites_database.dart';
+import 'package:pastore_app/screen/myflexibleappbar.dart';
+import 'package:pastore_app/style/ui2.dart';
+import 'package:pastore_app/car.dart';
+import 'package:pastore_app/screen/favorite.dart';
+import 'package:pastore_app/database/firebase_utils.dart';
+import 'package:pastore_app/screen/searchPage.dart';
+import 'package:pastore_app/style/style.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(MyApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -203,18 +209,18 @@ class HomeState extends State<Home> {
         backgroundColor: AppTheme.darkerBlue,
         fixedColor: AppTheme.orangeText,
         unselectedItemColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         onTap: navigationTapped,
         currentIndex: _page,
         items: [
           new BottomNavigationBarItem(
-              title: new Text(''), icon: new Icon(Icons.home)),
+              title: new Text('Home'), icon: new Icon(Icons.home)),
           new BottomNavigationBarItem(
-              title: new Text(''),
-              icon: IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () async {
+              title: new Text('Cerca'),
+              icon: GestureDetector(
+                child: Icon(Icons.search),
+                onTap: () async {
                   final Car searchRes = await showSearch<Car>(
                       context: context, delegate: searchPage(carList));
                   if (searchRes != null)
@@ -224,7 +230,7 @@ class HomeState extends State<Home> {
                 },
               )),
           new BottomNavigationBarItem(
-              title: new Text(''), icon: new Icon(Icons.favorite_border))
+              title: new Text('Preferiti'), icon: new Icon(Icons.favorite_border))
         ],
       ),
       body: new PageView.builder(

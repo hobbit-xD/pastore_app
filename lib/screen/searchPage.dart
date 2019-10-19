@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'car.dart';
+import 'package:pastore_app/car.dart';
 
 class searchPage extends SearchDelegate<Car> {
   searchPage(this.cars);

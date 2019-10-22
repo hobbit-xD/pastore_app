@@ -76,102 +76,120 @@ class MyFlexiableAppBar extends StatelessWidget {
             fit: BoxFit.contain,
             child: Row(
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(7.0),
-                  child: Icon(Icons.place, color: AppTheme.darkerBlue),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: AppTheme.orange),
-                ),
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: _launchMapsBI,
-                  child: new Text("Biella",
-                      style: regularTextStyle.copyWith(color: AppTheme.darkBlue,
-                          fontWeight: FontWeight.bold)),
-                ),
-                SizedBox(width: 5.0),
-                Container(
-                    padding: EdgeInsets.all(7.0),
-                    child: Icon(
-                      Icons.phone,
-                      color: AppTheme.darkerBlue,
-                    ),
-                    decoration: BoxDecoration(
-                        color: AppTheme.orange, shape: BoxShape.circle)),
-                SizedBox(width: 5.0),
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: _launchTELBI,
-                  child: Text(
-                    "+39 015/8123128",
-                    style: regularTextStyle.copyWith(fontSize: 17.0),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FittedBox(
-            fit: BoxFit.contain,
-            child: Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(7.0),
-                  child: Icon(Icons.place, color: AppTheme.darkerBlue),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: AppTheme.orange),
-                ),
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: _launchMapsVC,
-                  child: new Text("Vercelli",
-                      style: regularTextStyle.copyWith(color: AppTheme.darkBlue,
-                          fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                    padding: EdgeInsets.all(7.0),
-                    child: Icon(
-                      Icons.phone,
-                      color: AppTheme.darkerBlue,
-                    ),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: AppTheme.orange)),
-                SizedBox(width: 5.0),
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: _launchTELVC,
-                  child: Text(
-                    "+39 0161/294638",
-                    style: regularTextStyle.copyWith(fontSize: 17.0),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FittedBox(
-            fit: BoxFit.contain,
-            child: Row(
-              children: <Widget>[
-                Container(
-                    child: Container(
+                GestureDetector(
+                  onTap: _launchMapsBI,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
                         padding: EdgeInsets.all(7.0),
-                        child: Icon(
-                          Icons.language,
-                          color: AppTheme.darkerBlue,
-                        )),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: AppTheme.orange)),
-                SizedBox(width: 5.0),
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: _launchWEB,
-                  child: Text(
+                        child: Icon(Icons.place, color: AppTheme.darkerBlue),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: AppTheme.orange),
+                      ),
+                      SizedBox(width: 5.0),
+                      Text("Biella",
+                          style: regularTextStyle.copyWith(
+                              color: AppTheme.darkBlue,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 30.0),
+                GestureDetector(
+                  onTap: _launchTELBI,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                          padding: EdgeInsets.all(7.0),
+                          child: Icon(
+                            Icons.phone,
+                            color: AppTheme.darkerBlue,
+                          ),
+                          decoration: BoxDecoration(
+                              color: AppTheme.orange, shape: BoxShape.circle)),
+                      SizedBox(width: 5.0),
+                      Text(
+                        "+39 015-8123128",
+                        style: regularTextStyle.copyWith(fontSize: 17.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 5.0),
+          FittedBox(
+            fit: BoxFit.contain,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: _launchMapsVC,
+                  child: Row(children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(7.0),
+                      child: Icon(Icons.place, color: AppTheme.darkerBlue),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: AppTheme.orange),
+                    ),
+                    SizedBox(width: 5.0),
+                    new Text("Vercelli",
+                        style: regularTextStyle.copyWith(
+                            color: AppTheme.darkBlue,
+                            fontWeight: FontWeight.bold)),
+                  ]),
+                ),
+                SizedBox(width: 15.0),
+                GestureDetector(
+                  onTap: _launchTELVC,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                          padding: EdgeInsets.all(7.0),
+                          child: Icon(
+                            Icons.phone,
+                            color: AppTheme.darkerBlue,
+                          ),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: AppTheme.orange)),
+                      SizedBox(width: 5.0),
+                      Text(
+                        "+39 0161-294638",
+                        style: regularTextStyle.copyWith(fontSize: 17.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 5.0),
+          FittedBox(
+            fit: BoxFit.contain,
+            child: GestureDetector(
+              onTap: _launchWEB,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                      child: Container(
+                          padding: EdgeInsets.all(7.0),
+                          child: Icon(
+                            Icons.language,
+                            color: AppTheme.darkerBlue,
+                          )),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: AppTheme.orange)),
+                  SizedBox(width: 5.0),
+                  Text(
                     "www.pastoreautoveicoli.it",
                     style: regularTextStyle,
                   ),
-                ),
-              ],
+                  SizedBox(width: 30.0),
+                ],
+              ),
             ),
           ),
+          SizedBox(height: 10.0)
         ],
       ),
       decoration: new BoxDecoration(color: AppTheme.notWhite),

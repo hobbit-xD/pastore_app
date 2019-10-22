@@ -81,10 +81,10 @@ class Car {
     this._image = snapshot.value['Image'];
     this._km = snapshot.value['Km'];
     this._link = snapshot.value['Link'];
-    this._posti = snapshot.value['Numero Posti'];
+    this._posti = snapshot.value['Numero posti'];
     this._ptt = snapshot.value['PTT - Peso Totale a Terra (Kg)'];
     this._passo = snapshot.value['Passo'];
-    this._portata = snapshot.value['Portata'];
+    this._portata = snapshot.value['Portata utile (Kg)'];
     this._price = snapshot.value['Price'];
     this._rif = snapshot.value['Rif'];
     this._key = snapshot.key;
@@ -170,6 +170,25 @@ class Car {
 
   set data(String value) {
     _data = value;
+  }
+
+  String get posti => _posti;
+
+  String get portata{
+    
+    if(_portata == null)
+      return '-';
+
+    if(_portata.contains("AUTOVETTURA"))
+      return "Autovettura";
+
+    if(_portata.contains("("))
+      {
+        int index = _portata.indexOf("(");
+        return _portata.substring(0,index) + " Kg";
+      } 
+      return _portata + " Kg";
+
   }
 
   List<dynamic> get detailsMap => details;

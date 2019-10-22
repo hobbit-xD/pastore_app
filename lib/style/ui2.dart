@@ -35,9 +35,9 @@ class HomePageUiState extends State<HomePageUi> {
     );
 
     final carThumb = new Container(
-      width: 120.0,
-      height: 77.33,
-      decoration: BoxDecoration(
+      width: 130.0,
+      height: 83.66,
+          decoration: BoxDecoration(
           border: Border.all(color: AppTheme.nearlyBlack, width: 1.0),
           borderRadius: BorderRadius.circular(5.0),
           image: new DecorationImage(
@@ -93,14 +93,38 @@ class HomePageUiState extends State<HomePageUi> {
             style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
       ],
     );
+    final _posti = Row(
+      children: <Widget>[
+        new Text(
+          "Numero posti: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.posti ?? "-",
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+    final _portata = Row(
+      children: <Widget>[
+        new Text(
+          "Portata: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.portata ?? "-",
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal)),
 
+      ],
+    );
     final carDetails = new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _riferimento,
         _anno,
+        _portata,
         _emissioni,
         _percorrenza,
+        _posti
       ],
     );
 
@@ -153,7 +177,7 @@ class HomePageUiState extends State<HomePageUi> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              new Text("Aggiungimi ai prefereriti ", style: subHeaderTextStyle),
+              new Text("Aggiungimi ai preferiti ", style: subHeaderTextStyle),
               _favoriteButton
             ],
           ),
@@ -181,10 +205,11 @@ class HomePageUiState extends State<HomePageUi> {
       child: Container(
           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           constraints: BoxConstraints(
-              maxHeight: 210.0,
-              minHeight: 195.0,
+              maxHeight: 230.0,
+              minHeight: 210.0,
               maxWidth: MediaQuery.of(context).size.width,
               minWidth: MediaQuery.of(context).size.width),
+          
           child: carCard),
     ); //);
   }

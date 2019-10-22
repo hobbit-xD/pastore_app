@@ -86,6 +86,30 @@ class CarPageState extends State<CarPage> {
       ],
     );
 
+    final _posti = Row(
+      children: <Widget>[
+        new Text(
+          "Numero posti: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.posti ?? "-",
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+      ],
+    );
+    final _portata = Row(
+      children: <Widget>[
+        new Text(
+          "Portata: ",
+          style: regularTextStyle.copyWith(
+              color: AppTheme.darkBlue, fontWeight: FontWeight.bold),
+        ),
+        new Text(car.portata ?? "-",
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal)),
+      
+      ],
+    );
+
     final carDetails = new Container(
       margin: EdgeInsets.only(left: 8.0),
       child: new Column(
@@ -93,8 +117,10 @@ class CarPageState extends State<CarPage> {
         children: <Widget>[
           _riferimento,
           _anno,
+          _portata,
           _emissioni,
           _percorrenza,
+          _posti,
         ],
       ),
     );
@@ -133,8 +159,8 @@ class CarPageState extends State<CarPage> {
 
     final carCard = Container(
       constraints: BoxConstraints(
-          maxHeight: 170.0,
-          minHeight: 155.0,
+          maxHeight: 210.0,
+          minHeight: 185.0,
           maxWidth: MediaQuery.of(context).size.width,
           minWidth: MediaQuery.of(context).size.width),
       margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
@@ -163,13 +189,14 @@ class CarPageState extends State<CarPage> {
         },
         autoplay: true,
         itemCount: car.postImages.length,
-
-        //  control: new SwiperControl(color: AppTheme.orange),
+        autoplayDelay: 5000,
+        autoplayDisableOnInteraction: true,
+        control: new SwiperControl(color: AppTheme.orange),
       ),
     );
 
     final carDescrContent = new Container(
-        margin: EdgeInsets.only(top: 110.0),
+        margin: EdgeInsets.only(top: 145.0),
         child: new ListView.builder(
             controller: _controller,
             itemCount: (listDetails != null) ? listDetails.length : 0,

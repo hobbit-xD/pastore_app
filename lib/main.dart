@@ -202,7 +202,6 @@ class HomeState extends State<Home> {
       Container(),
       FavoritesScreen(carList, myDatabase)
     ];
-
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -214,11 +213,21 @@ class HomeState extends State<Home> {
         onTap: navigationTapped,
         currentIndex: _page,
         items: [
-          new BottomNavigationBarItem(
+          BottomNavigationBarItem(
               title: new Text('Home'), icon: new Icon(Icons.home)),
-          new BottomNavigationBarItem(
-              title: new Text('Cerca'),
-              icon: GestureDetector(
+          BottomNavigationBarItem(
+              title: InkWell(
+                child: Text('Cerca'),
+                onTap: () async {
+                  final Car searchRes = await showSearch<Car>(
+                      context: context, delegate: searchPage(carList));
+                  if (searchRes != null)
+                    Navigator.of(context).push(new PageRouteBuilder(
+                        pageBuilder: (_, __, ___) =>
+                            new CarPage(searchRes, myDatabase)));
+                },
+              ),
+              icon: InkWell(
                 child: Icon(Icons.search),
                 onTap: () async {
                   final Car searchRes = await showSearch<Car>(
@@ -229,8 +238,9 @@ class HomeState extends State<Home> {
                             new CarPage(searchRes, myDatabase)));
                 },
               )),
-          new BottomNavigationBarItem(
-              title: new Text('Preferiti'), icon: new Icon(Icons.favorite_border))
+          BottomNavigationBarItem(
+              title: new Text('Preferiti'),
+              icon: new Icon(Icons.favorite_border))
         ],
       ),
       body: new PageView.builder(
@@ -244,3 +254,12 @@ class HomeState extends State<Home> {
     );
   }
 }
+/*
+onTap: () async {
+                  final Car searchRes = await showSearch<Car>(
+                      context: context, delegate: searchPage(carList));
+                  if (searchRes != null)
+                    Navigator.of(context).push(new PageRouteBuilder(
+                        pageBuilder: (_, __, ___) =>
+                            new CarPage(searchRes, myDatabase)));
+                },*/

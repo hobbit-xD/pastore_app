@@ -115,6 +115,8 @@ class Car {
     _rif = value;
   }
 
+  String get codice => _codice;
+
   String get anno {
     if (_anno != null) return _anno;
     return '';

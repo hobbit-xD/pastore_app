@@ -121,10 +121,10 @@ class HomePageUiState extends State<HomePageUi> {
       children: <Widget>[
         _riferimento,
         _anno,
-        _portata,
+        //_portata,
         _emissioni,
         _percorrenza,
-        _posti
+        //_posti
       ],
     );
 

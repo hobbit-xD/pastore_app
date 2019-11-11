@@ -47,8 +47,16 @@ class CarPageState extends State<CarPage> {
         new Text("Rif: ",
             style: regularTextStyle.copyWith(
                 color: AppTheme.darkBlue, fontWeight: FontWeight.bold)),
-        new Text(car.rif ?? '-',
-            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal))
+        RichText(
+          text: TextSpan(
+            text: car.rif ?? '-',
+            children: [
+              TextSpan(text: ' - '),
+              TextSpan(text: car.codice ?? ''),
+            ],
+            style: regularTextStyle.copyWith(fontWeight: FontWeight.normal),
+          ),
+        )
       ],
     );
 
@@ -106,7 +114,6 @@ class CarPageState extends State<CarPage> {
         ),
         new Text(car.portata ?? "-",
             style: regularTextStyle.copyWith(fontWeight: FontWeight.normal)),
-      
       ],
     );
 

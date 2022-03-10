@@ -8,6 +8,7 @@ L'applicazione raccoglie i dati presenti sul [sito web](http://www.pastoreautove
 Una volta raccolti tutti i dati, quest' ultimi vengono caricati su un database Firebase che comunica con l'App e mostrati all' utente.
 
 **ENG**
+
 My first application developed with **Flutter**.
 
 It can be downloaded for free from the Google Play Store at the following address: [Click here](https://play.google.com/store/apps/detailsid=com.pastoreautoveicoli.pastore_app&hl=it)

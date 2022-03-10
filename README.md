@@ -11,7 +11,7 @@ Una volta raccolti tutti i dati, quest' ultimi vengono caricati su un database F
 
 My first application developed with **Flutter**.
 
-It can be downloaded for free from the Google Play Store at the following address: [Click here](https://play.google.com/store/apps/detailsid=com.pastoreautoveicoli.pastore_app&hl=it)
+It can be downloaded for free from the Google Play Store at the following address: [Click here](https://play.google.com/store/apps/details?id=com.pastoreautoveicoli.pastore_app&hl=it)
 
 The application collects the data on the [website](http://www.pastoreautoveicoli.it/prodotti/) through a scraper written in Python written by me and available [here](https://github.com/hobbit-xD/pastore_scraper).
 Once all the data has been collected, the latter are uploaded to a Firebase database that communicates with the App and shown to the user.
